@@ -1,0 +1,28 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
+
+version: '3.4'
+
+services:
+  apiservice:
+    image: apiservice
+    container_name: apiservice
+    build:
+      context: ./ApiService
+      dockerfile: ./Dockerfile
+    ports:
+      - 5188:5188
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+  cleintapi:
+    image: clientservice
+    container_name: clientservice
+    build:
+      context: ./ClientService
+      dockerfile: ./Dockerfile
+    ports:
+      - 5001:5001
+networks:
+  default:
+    external:
+      name: jar-container-network
+
